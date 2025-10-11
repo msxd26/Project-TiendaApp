@@ -1,0 +1,12 @@
+services:
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_DB: "tienda"
+      POSTGRES_USER: "user01"
+      POSTGRES_PASSWORD: "password"
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/
+    ports:
+      - "5432:5432"

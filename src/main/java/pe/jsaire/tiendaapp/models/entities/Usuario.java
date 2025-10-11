@@ -1,0 +1,46 @@
+package pe.jsaire.tiendaapp.models.entities;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.util.Set;
+
+@Entity(name = "usuario")
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+public class Usuario {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
+    private Long idUsuario;
+    private String nombre;
+    private String tipoDocumento;
+    private String numeroDocumento;
+    private String direccion;
+    private String telefono;
+    private String email;
+    private String password;
+    private boolean estado;
+
+    @ToString.Exclude
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "idusuario"),
+            inverseJoinColumns = @JoinColumn(name = "idrol"))
+    private Set<Rol> rols;
+}
