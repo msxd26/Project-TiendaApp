@@ -5,13 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ArticuloResponse {
+public class ArticuloResponse implements Serializable {
+
     private Long idarticulo;
     private Long idcategoria;
     private String codigo;

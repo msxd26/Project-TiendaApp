@@ -5,13 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class VentaRequest {
+public class VentaRequest implements Serializable {
     private Long idcliente;
     private Long idusuario;
     private String tipoComprobante;

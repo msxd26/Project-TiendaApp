@@ -11,8 +11,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoriaRequest implements Serializable {
+public class RolRequest implements Serializable {
     private String nombre;
     private String descripcion;
-    private Boolean estado;
 }

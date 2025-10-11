@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonaResponse {
+public class PersonaResponse implements Serializable {
     private Long idpersona;
     private String tipoPersona;
     private String nombre;
