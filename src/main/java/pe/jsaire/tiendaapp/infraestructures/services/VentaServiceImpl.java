@@ -58,7 +58,6 @@ public class VentaServiceImpl implements VentaService {
                 .orElseThrow(() -> new UsuarioNotFoundException("No exixste ningun usuario con este id "
                         + ventaRequest.getIdusuario()));
 
-
         venta.setPersona(persona);
         venta.setUsuario(usuario);
         venta.setTipoComprobante(TipoComprobante.valueOf(ventaRequest.getTipoComprobante()));
@@ -102,6 +101,7 @@ public class VentaServiceImpl implements VentaService {
 
 
     @Override
+    @Transactional
     public void delete(Long id) {
         if (!ventaRepository.existsById(id)) {
             throw new VentaNotFoundException("No existe ninguna venta con este id " + id);
@@ -110,6 +110,7 @@ public class VentaServiceImpl implements VentaService {
     }
 
     @Override
+    @Transactional
     public VentaResponse addDetalle(Long id, DetalleVentaRequest detalleVentaRequest) {
         var venta = ventaRepository.findById(id).
                 orElseThrow(() -> new VentaNotFoundException("No existe ninguna venta  con este id " + id));
@@ -138,6 +139,7 @@ public class VentaServiceImpl implements VentaService {
     }
 
     @Override
+    @Transactional
     public VentaResponse removeDetalle(Long id, Long idDetalle) {
 
         Venta venta = ventaRepository.findById(id).
@@ -159,10 +161,5 @@ public class VentaServiceImpl implements VentaService {
         venta.removeDetalleVenta(detalleVenta);
 
         return ventaMapper.toResponse(ventaRepository.save(venta));
-    }
-
-    @Override
-    public VentaResponse updateCantidad(Long idVenta, Long idDetalleVenta, Integer cantidad) {
-        return null;
     }
 }

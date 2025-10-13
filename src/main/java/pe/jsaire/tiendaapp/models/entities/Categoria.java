@@ -7,14 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity(name = "categoria")
 @Setter
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,4 +21,8 @@ public class Categoria {
     private String nombre;
     private String descripcion;
     private Boolean estado;
+
+    public Categoria() {
+        this.estado = true;
+    }
 }

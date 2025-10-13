@@ -22,9 +22,7 @@ import pe.jsaire.tiendaapp.models.dto.response.VentaResponse;
 @RequiredArgsConstructor
 public class VentaController {
 
-
     private final VentaService ventaService;
-
 
     @GetMapping("/{id}")
     public ResponseEntity<VentaResponse> readById(@PathVariable Long id) {
@@ -43,16 +41,16 @@ public class VentaController {
     }
 
     @PatchMapping("/{idVenta}/detalles")
-    public VentaResponse addDetalleVenta(
+    public ResponseEntity<VentaResponse> addDetalleVenta(
             @PathVariable Long idVenta,
             @RequestBody DetalleVentaRequest detalleRequest) {
-        return ventaService.addDetalle(idVenta, detalleRequest);
+        return ResponseEntity.status(HttpStatus.OK).body(ventaService.addDetalle(idVenta, detalleRequest));
     }
 
     @PatchMapping("/{idVenta}/detalles/{idDetalle}")
-    public VentaResponse removeDetalleVenta(
+    public ResponseEntity<VentaResponse> removeDetalleVenta(
             @PathVariable Long idVenta,
             @PathVariable Long idDetalle) {
-        return ventaService.removeDetalle(idVenta, idDetalle);
+        return ResponseEntity.status(HttpStatus.OK).body(ventaService.removeDetalle(idVenta, idDetalle));
     }
 }

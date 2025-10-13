@@ -10,5 +10,5 @@ public interface VentaService extends GenericService<VentaRequest, VentaResponse
 
     VentaResponse removeDetalle(Long id, Long idDetalle);
 
-    VentaResponse updateCantidad(Long idVenta, Long idDetalleVenta, Integer cantidad);
+    
 }

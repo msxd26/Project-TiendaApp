@@ -1,5 +1,6 @@
 package pe.jsaire.tiendaapp.models.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ import java.math.BigDecimal;
 public class DetalleIngreso {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "iddetalle_ingreso")
     private Long idDetalleIngreso;
 
     @ManyToOne(fetch = FetchType.LAZY)

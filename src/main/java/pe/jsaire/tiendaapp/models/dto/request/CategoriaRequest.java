@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pe.jsaire.tiendaapp.utils.validations.isExistsByCategoria;
 
 import java.io.Serializable;
 
@@ -15,6 +16,7 @@ import java.io.Serializable;
 public class CategoriaRequest implements Serializable {
 
     @NotBlank(message = "Este campo no puede estar en blanco")
+    @isExistsByCategoria
     private String nombre;
 
     @NotBlank(message = "Este campo no puede estar en blanco")

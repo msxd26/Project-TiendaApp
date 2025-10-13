@@ -10,10 +10,10 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ExistByNombreValidation.class)
-public @interface isExistByNombre {
+@Constraint(validatedBy = ExistBySerieComprobanteIngresoValidation.class)
+public @interface isExistsBySerieComprobanteIngreso {
 
-    String message() default "Este nombre ya existe en la base de datos";
+    String message() default "Este serie ya existe en la base de datos";
 
     Class<?>[] groups() default {};
 

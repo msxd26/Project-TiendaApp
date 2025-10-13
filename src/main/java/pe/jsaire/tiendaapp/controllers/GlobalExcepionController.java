@@ -13,6 +13,7 @@ import pe.jsaire.tiendaapp.models.dto.response.ErrorResponse;
 import pe.jsaire.tiendaapp.utils.exceptions.ArticuloNotFoundException;
 import pe.jsaire.tiendaapp.utils.exceptions.CategoriaNotFoundException;
 import pe.jsaire.tiendaapp.utils.exceptions.PersonaNotFoundException;
+import pe.jsaire.tiendaapp.utils.exceptions.StockInsuficienteException;
 import pe.jsaire.tiendaapp.utils.exceptions.VentaNotFoundException;
 
 import java.time.LocalDateTime;
@@ -27,7 +28,8 @@ public class GlobalExcepionController {
             CategoriaNotFoundException.class,
             VentaNotFoundException.class,
             PersonaNotFoundException.class,
-            HttpMessageNotReadableException.class})
+            HttpMessageNotReadableException.class,
+            StockInsuficienteException.class})
     public ResponseEntity<ErrorResponse> handleException(Exception ex) {
         ErrorResponse error = ErrorResponse.builder()
                 .status(HttpStatus.NOT_FOUND.value())
