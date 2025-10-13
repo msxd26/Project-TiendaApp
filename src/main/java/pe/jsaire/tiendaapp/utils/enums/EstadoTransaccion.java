@@ -1,5 +1,10 @@
 package pe.jsaire.tiendaapp.utils.enums;
 
-public enum EstadoTransaccion {
-    Aceptado, Anulado, Pendiente
+import java.io.Serializable;
+
+public enum EstadoTransaccion implements Serializable {
+
+    Aceptado, Anulado, Pendiente;
+
+
 }

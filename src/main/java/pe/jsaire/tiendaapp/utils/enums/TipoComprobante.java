@@ -1,6 +1,8 @@
 package pe.jsaire.tiendaapp.utils.enums;
 
-public enum TipoComprobante {
+import java.io.Serializable;
+
+public enum TipoComprobante implements Serializable {
 
     Factura, Boleta, Ticket,
     GuiadeRemision

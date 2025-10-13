@@ -4,6 +4,7 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +20,13 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class ArticuloRequest implements Serializable {
 
+    @Size(min = 1)
     private Long idcategoria;
 
-    @NotBlank(message = "El campo codigo no puede estar en blanco")
+    @NotBlank(message = "El campo  no puede estar en blanco")
     private String codigo;
 
-    @NotBlank(message = "El campo nombre no puede estar en blanco")
+    @NotBlank(message = "El campo  no puede estar en blanco")
     @isExistByNombre
     private String nombre;
 
@@ -32,9 +34,9 @@ public class ArticuloRequest implements Serializable {
     @Positive
     private BigDecimal precioVenta;
 
-    @PositiveOrZero(message = "El stock no puede ser negativo")
+    @PositiveOrZero(message = "El campo no puede ser negativo")
     private Integer stock;
 
-    @NotBlank(message = "El campo descripcion no puede estar en blanco")
+    @NotBlank(message = "El campo  no puede estar en blanco")
     private String descripcion;
 }

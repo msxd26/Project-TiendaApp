@@ -66,6 +66,7 @@ public class ArticuloServiceImpl implements ArticuloService {
     @Transactional
     public void delete(Long id) {
 
+
         if (!articuloRepository.existsById(id)) {
             throw new ArticuloNotFoundException("No se puede eliminar, el artículo con ID " + id + " no existe.");
         }

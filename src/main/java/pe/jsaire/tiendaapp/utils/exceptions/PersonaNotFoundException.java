@@ -1,0 +1,7 @@
+package pe.jsaire.tiendaapp.utils.exceptions;
+
+public class PersonaNotFoundException extends RuntimeException {
+    public PersonaNotFoundException(String message) {
+        super(message);
+    }
+}

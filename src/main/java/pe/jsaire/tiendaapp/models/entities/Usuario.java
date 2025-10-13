@@ -1,5 +1,6 @@
 package pe.jsaire.tiendaapp.models.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,9 +29,12 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
+    @Column(name = "idusuario")
     private Long idUsuario;
     private String nombre;
+    @Column(name = "tipo_documento")
     private String tipoDocumento;
+    @Column(name = "num_documento")
     private String numeroDocumento;
     private String direccion;
     private String telefono;

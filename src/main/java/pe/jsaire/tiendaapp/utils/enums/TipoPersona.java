@@ -1,6 +1,8 @@
 package pe.jsaire.tiendaapp.utils.enums;
 
-public enum TipoPersona {
+import java.io.Serializable;
+
+public enum TipoPersona implements Serializable {
     Cliente,
     Proveedor
 }

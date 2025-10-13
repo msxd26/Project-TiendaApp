@@ -11,7 +11,6 @@ import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -20,7 +19,6 @@ import java.math.BigDecimal;
 @Setter
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @Builder
 public class Articulo {
 
@@ -32,7 +30,7 @@ public class Articulo {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "idcategoria")
     private Categoria categoria;
-
+ 
     private String codigo;
     private String nombre;
     private BigDecimal precioVenta;
@@ -40,4 +38,7 @@ public class Articulo {
     private String descripcion;
     private Boolean estado;
 
+    public Articulo() {
+        this.estado = true;
+    }
 }

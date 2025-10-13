@@ -1,5 +1,6 @@
 package pe.jsaire.tiendaapp.models.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -21,13 +22,20 @@ public class Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idpersona")
     private Long idPersona;
+    
     @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_persona")
     private TipoPersona tipoPersona;
     private String nombre;
+
+    @Column(name = "tipo_documento")
     private String tipoDocumento;
+
+    @Column(name = "num_documento")
     private String numeroDocumento;
     private String direccion;
     private String email;
-    
+
 }

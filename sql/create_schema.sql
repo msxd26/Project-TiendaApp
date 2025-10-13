@@ -1,15 +1,9 @@
-CREATE TYPE tipo_persona_enum AS ENUM ('Cliente', 'Proveedor');
-CREATE TYPE tipo_comprobante_enum AS ENUM ('Factura', 'Boleta', 'Ticket', 'Guia de Remision');
-CREATE TYPE estado_transaccion_enum AS ENUM ('Aceptado', 'Anulado', 'Pendiente');
-
-
 CREATE TABLE categoria(
                           idcategoria     BIGSERIAL PRIMARY KEY,
                           nombre          VARCHAR(50) NOT NULL UNIQUE,
                           descripcion     TEXT NULL,
                           estado          BOOLEAN DEFAULT TRUE
 );
-
 
 CREATE TABLE articulo(
                          idarticulo      BIGSERIAL PRIMARY KEY,
@@ -23,10 +17,9 @@ CREATE TABLE articulo(
                          FOREIGN KEY (idcategoria) REFERENCES categoria(idcategoria)
 );
 
-
 CREATE TABLE persona(
                         idpersona       BIGSERIAL PRIMARY KEY,
-                        tipo_persona    tipo_persona_enum NOT NULL,
+                        tipo_persona    VARCHAR(20) NOT NULL, -- Cambiado de enum a VARCHAR
                         nombre          VARCHAR(100) NOT NULL,
                         tipo_documento  VARCHAR(20) NULL,
                         num_documento   VARCHAR(20) NULL,
@@ -35,14 +28,12 @@ CREATE TABLE persona(
                         email           VARCHAR(50) NULL
 );
 
-
 CREATE TABLE rol(
                     idrol           BIGSERIAL PRIMARY KEY,
                     nombre          VARCHAR(30) NOT NULL,
                     descripcion     TEXT NULL,
                     estado          BOOLEAN DEFAULT TRUE
 );
-
 
 CREATE TABLE usuario(
                         idusuario       BIGSERIAL PRIMARY KEY,
@@ -56,33 +47,28 @@ CREATE TABLE usuario(
                         estado          BOOLEAN DEFAULT TRUE
 );
 
-
 CREATE TABLE usuario_rol (
                              idusuario   BIGINT NOT NULL,
                              idrol       BIGINT NOT NULL,
-
                              FOREIGN KEY (idusuario) REFERENCES usuario(idusuario) ON DELETE CASCADE,
                              FOREIGN KEY (idrol) REFERENCES rol(idrol) ON DELETE CASCADE,
-
                              PRIMARY KEY (idusuario, idrol)
 );
-
 
 CREATE TABLE ingreso(
                         idingreso           BIGSERIAL PRIMARY KEY,
                         idproveedor         BIGINT NOT NULL,
                         idusuario           BIGINT NOT NULL,
-                        tipo_comprobante    tipo_comprobante_enum NOT NULL,
+                        tipo_comprobante    VARCHAR(20) NOT NULL, -- Cambiado de enum a VARCHAR
                         serie_comprobante   VARCHAR(7) NULL,
                         num_comprobante     VARCHAR(10) NOT NULL,
                         fecha               TIMESTAMP NOT NULL,
                         impuesto            DECIMAL(4,2) NOT NULL,
                         total               DECIMAL(11,2) NOT NULL,
-                        estado              estado_transaccion_enum NOT NULL,
+                        estado              VARCHAR(20) NOT NULL, -- Cambiado de enum a VARCHAR
                         FOREIGN KEY (idproveedor) REFERENCES persona(idpersona),
                         FOREIGN KEY (idusuario) REFERENCES usuario(idusuario)
 );
-
 
 CREATE TABLE detalle_ingreso(
                                 iddetalle_ingreso   BIGSERIAL PRIMARY KEY,
@@ -94,22 +80,20 @@ CREATE TABLE detalle_ingreso(
                                 FOREIGN KEY (idarticulo) REFERENCES articulo(idarticulo)
 );
 
-
 CREATE TABLE venta(
                       idventa             BIGSERIAL PRIMARY KEY,
                       idcliente           BIGINT NOT NULL,
                       idusuario           BIGINT NOT NULL,
-                      tipo_comprobante    tipo_comprobante_enum NOT NULL,
+                      tipo_comprobante    VARCHAR(20) NOT NULL, -- Cambiado de enum a VARCHAR
                       serie_comprobante   VARCHAR(7) NULL,
                       num_comprobante     VARCHAR(10) NOT NULL,
                       fecha_hora          TIMESTAMP NOT NULL,
                       impuesto            DECIMAL(4,2) NOT NULL,
                       total               DECIMAL(11,2) NOT NULL,
-                      estado              estado_transaccion_enum NOT NULL,
+                      estado              VARCHAR(20) NOT NULL, -- Cambiado de enum a VARCHAR
                       FOREIGN KEY (idcliente) REFERENCES persona(idpersona),
                       FOREIGN KEY (idusuario) REFERENCES usuario(idusuario)
 );
-
 
 CREATE TABLE detalle_venta(
                               iddetalle_venta     BIGSERIAL PRIMARY KEY,
