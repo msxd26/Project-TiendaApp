@@ -16,7 +16,7 @@ public class ExistByCategoriaValidation implements ConstraintValidator<isExistsB
 
     @Override
     public boolean isValid(String nombre, ConstraintValidatorContext constraintValidatorContext) {
-        if (nombre == null || nombre.isEmpty()) {
+        if (nombre == null || nombre.isBlank()) {
             return false;
         }
         return !categoriaRepository.existsByNombre(nombre);

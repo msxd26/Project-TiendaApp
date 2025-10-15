@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,4 +21,5 @@ public class UsuarioResponse implements Serializable {
     private String telefono;
     private String email;
     private Boolean estado;
+    private Set<RolResponse> role;
 }

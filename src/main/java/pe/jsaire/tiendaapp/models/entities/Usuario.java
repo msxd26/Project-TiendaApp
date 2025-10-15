@@ -9,6 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Transient;
+import jakarta.persistence.UniqueConstraint;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -45,6 +48,16 @@ public class Usuario {
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "idusuario"),
-            inverseJoinColumns = @JoinColumn(name = "idrol"))
+            inverseJoinColumns = @JoinColumn(name = "idrol"), uniqueConstraints = {
+            @UniqueConstraint(columnNames = {"idusuario", "idrol"})
+    })
     private Set<Rol> rols;
+
+    @Transient
+    private boolean isAdmin;
+
+    @PrePersist
+    public void prePersist() {
+        this.estado = true;
+    }
 }

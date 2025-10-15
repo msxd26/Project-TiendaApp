@@ -34,6 +34,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
+    @Transactional
     public CategoriaResponse update(CategoriaRequest categoriaRequest, Long id) {
         Categoria categoriaExiste = categoriaRepository.findById(id)
                 .orElseThrow(() -> new CategoriaNotFoundException("No Existe una categoria con id : " + id));
@@ -45,11 +46,12 @@ public class CategoriaServiceImpl implements CategoriaService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
 
         if (!categoriaRepository.existsById(id)) {
-            categoriaRepository.deleteById(id);
+            throw new CategoriaNotFoundException("No Existe una categoria con id : " + id);
         }
-
+        categoriaRepository.deleteById(id);
     }
 }

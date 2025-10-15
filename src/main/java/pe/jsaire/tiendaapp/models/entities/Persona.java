@@ -24,10 +24,11 @@ public class Persona {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idpersona")
     private Long idPersona;
-    
+
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_persona")
     private TipoPersona tipoPersona;
+
     private String nombre;
 
     @Column(name = "tipo_documento")
@@ -35,6 +36,7 @@ public class Persona {
 
     @Column(name = "num_documento")
     private String numeroDocumento;
+    private String telefono;
     private String direccion;
     private String email;
 

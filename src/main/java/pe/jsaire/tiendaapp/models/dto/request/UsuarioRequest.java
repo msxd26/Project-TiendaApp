@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pe.jsaire.tiendaapp.utils.validations.isExistsByEmail;
 
 import java.io.Serializable;
 
@@ -30,9 +31,11 @@ public class UsuarioRequest implements Serializable {
     private String telefono;
 
     @NotBlank(message = "El campo  no puede estar en blanco")
+    @isExistsByEmail
     private String email;
 
     @NotBlank(message = "El campo  no puede estar en blanco")
     private String password;
 
+    private boolean admin;
 }

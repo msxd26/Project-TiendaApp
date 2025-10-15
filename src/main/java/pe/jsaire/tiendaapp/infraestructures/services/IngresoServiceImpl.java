@@ -93,7 +93,7 @@ public class IngresoServiceImpl implements IngresoService {
     public IngresoResponse update(IngresoRequest ingresoRequest, Long id) {
         Ingreso ingreo = ingresoRepository.findById(id)
                 .orElseThrow(() -> new IngresoNotFoundException("No existe un ingreso con id " + id));
-    
+
         return null;
     }
 
@@ -103,9 +103,9 @@ public class IngresoServiceImpl implements IngresoService {
     public void delete(Long id) {
 
         if (!ingresoRepository.existsById(id)) {
-            ingresoRepository.deleteById(id);
+            throw new IngresoNotFoundException("No existe un ingreso con id " + id);
         }
-
+        ingresoRepository.deleteById(id);
     }
 
     @Override
