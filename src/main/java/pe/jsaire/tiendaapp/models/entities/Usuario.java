@@ -19,6 +19,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "usuario")
@@ -27,7 +29,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Usuario {
+public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,10 +56,26 @@ public class Usuario {
     private Set<Rol> rols;
 
     @Transient
-    private boolean isAdmin;
+    private boolean admin;
 
     @PrePersist
     public void prePersist() {
         this.estado = true;
+    }
+
+
+    public void addRol(Rol rol) {
+        if (this.rols == null) {
+            this.rols = new HashSet<>();
+        }
+        this.rols.add(rol);
+        this.setRols(this.rols);
+    }
+
+    public void removeRol(Rol rol) {
+        if (this.rols != null) {
+            this.rols.remove(rol);
+            this.setRols(null);
+        }
     }
 }

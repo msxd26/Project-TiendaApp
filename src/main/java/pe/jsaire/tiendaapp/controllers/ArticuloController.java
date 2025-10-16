@@ -24,17 +24,19 @@ public class ArticuloController {
     private final ArticuloService articuloService;
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @PreAuthorize("hasAnyRole('ADMIN','ALMACENERO','VENDEDOR')")
     public ResponseEntity<?> read(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(articuloService.findById(id));
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN','ALMACENERO')")
     public ResponseEntity<?> create(@Valid @RequestBody ArticuloRequest articuloRequest) {
         return ResponseEntity.status(HttpStatus.CREATED).body(articuloService.save(articuloRequest));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> update(@Valid @RequestBody ArticuloRequest articuloRequest, @PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(articuloService.update(articuloRequest, id));
     }

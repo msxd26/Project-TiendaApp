@@ -50,7 +50,6 @@ public class SecurityConfig {
         return http.authorizeHttpRequests((autz) ->
                         autz.requestMatchers(HttpMethod.GET, "/usuario/").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/usuario/registrar").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/usuario/").hasRole("ADMIN")
                                 .anyRequest().authenticated())
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .addFilter(new JwtValidationFilter(authenticationManager()))

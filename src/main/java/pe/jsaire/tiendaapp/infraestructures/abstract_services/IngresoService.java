@@ -10,4 +10,6 @@ public interface IngresoService extends GenericService<IngresoRequest, IngresoRe
     IngresoResponse addDetalle(Long id, DetalleIngresoRequest detalleIngreso);
 
     IngresoResponse removeDetalle(Long id, Long idDetalle);
+
+    boolean existsIngresoBySerieComprobante(String serieComprobante);
 }

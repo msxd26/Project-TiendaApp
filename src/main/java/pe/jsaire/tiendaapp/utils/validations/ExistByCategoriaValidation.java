@@ -5,13 +5,13 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import pe.jsaire.tiendaapp.models.repositories.CategoriaRepository;
+import pe.jsaire.tiendaapp.infraestructures.abstract_services.CategoriaService;
 
 @Component
 @RequiredArgsConstructor
 public class ExistByCategoriaValidation implements ConstraintValidator<isExistsByCategoria, String> {
 
-    private final CategoriaRepository categoriaRepository;
+    private final CategoriaService categoriaService;
 
 
     @Override
@@ -19,6 +19,6 @@ public class ExistByCategoriaValidation implements ConstraintValidator<isExistsB
         if (nombre == null || nombre.isBlank()) {
             return false;
         }
-        return !categoriaRepository.existsByNombre(nombre);
+        return !categoriaService.existsByNombre(nombre);
     }
 }

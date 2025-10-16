@@ -4,13 +4,13 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import pe.jsaire.tiendaapp.models.repositories.IngresoRepository;
+import pe.jsaire.tiendaapp.infraestructures.abstract_services.IngresoService;
 
 @Component
 @RequiredArgsConstructor
 public class ExistBySerieComprobanteIngresoValidation implements ConstraintValidator<isExistsBySerieComprobanteIngreso, String> {
 
-    private final IngresoRepository ingresoRepository;
+    private final IngresoService ingresoService;
 
 
     @Override
@@ -20,6 +20,6 @@ public class ExistBySerieComprobanteIngresoValidation implements ConstraintValid
             return false;
         }
 
-        return !ingresoRepository.existsIngresoBySerieComprobante(serie);
+        return !ingresoService.existsIngresoBySerieComprobante(serie);
     }
 }

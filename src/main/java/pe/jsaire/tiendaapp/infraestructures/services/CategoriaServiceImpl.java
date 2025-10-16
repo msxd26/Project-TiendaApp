@@ -48,10 +48,14 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Override
     @Transactional
     public void delete(Long id) {
-
         if (!categoriaRepository.existsById(id)) {
             throw new CategoriaNotFoundException("No Existe una categoria con id : " + id);
         }
         categoriaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsByNombre(String nombre) {
+        return categoriaRepository.existsByNombre(nombre);
     }
 }

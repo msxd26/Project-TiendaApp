@@ -35,7 +35,7 @@ public class JpaUserDetailsService implements UserDetailsService {
         Usuario usuario = usuarioOptional.orElseThrow();
 
         List<GrantedAuthority> grantedAuthorities = usuario.getRols().stream()
-                .map(rol -> new SimpleGrantedAuthority(rol.getNombre())).collect(Collectors.toList());
+                .map(rol -> new SimpleGrantedAuthority(rol.getNombre().name())).collect(Collectors.toList());
         return new User(usuario.getEmail(), usuario.getPassword(), usuario.isEstado(),
                 true, true, true, grantedAuthorities);
     }

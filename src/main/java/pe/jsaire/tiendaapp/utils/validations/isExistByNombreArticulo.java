@@ -10,8 +10,8 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ExistByNombreValidation.class)
-public @interface isExistByNombre {
+@Constraint(validatedBy = ExistByArticuloValidation.class)
+public @interface isExistByNombreArticulo {
 
     String message() default "Este nombre ya existe en la base de datos";
 

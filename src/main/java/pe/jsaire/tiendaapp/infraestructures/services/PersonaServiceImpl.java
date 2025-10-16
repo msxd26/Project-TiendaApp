@@ -32,6 +32,7 @@ public class PersonaServiceImpl implements PersonaService {
     }
 
     @Override
+    @Transactional
     public PersonaResponse update(PersonaRequest personaRequest, Long id) {
         Persona persona = personaRepository.findById(id)
                 .orElseThrow(() -> new PersonaNotFoundException("No se encontro el persona con el id: " + id));
@@ -46,6 +47,7 @@ public class PersonaServiceImpl implements PersonaService {
     }
 
     @Override
+    @Transactional
     public void delete(Long id) {
 
         if (!personaRepository.existsById(id)) {
