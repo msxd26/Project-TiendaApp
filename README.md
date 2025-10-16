@@ -1,4 +1,4 @@
-# SISTEMA DE TIENDASISTEMA DE TIENDA BACKEND + JWT
+# SISTEMA DE TIENDA BACKEND + JWT
 
  Esta API esta desarrollada con Spring boot.Esta API esta desarrollada con Spring boot.
  
