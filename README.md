@@ -27,7 +27,7 @@ cd Project-TiendaApp
 ```
 
 ##### 2. Configurar y levantar
-El archivo ```docker-compose.yml``` está dentro del directorio principa, el cual se encargara de levantar la base de datos.
+El archivo ```docker-compose.yml``` está dentro del directorio principal, el cual se encargara de levantar la base de datos.
 
 ``` 
 docker compose up -d
