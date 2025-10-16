@@ -27,7 +27,7 @@ import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 public class SecurityConfig {
 
 
@@ -48,8 +48,21 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filter(HttpSecurity http, CorsConfigurationSource corsConfigurationSource) throws Exception {
         return http.authorizeHttpRequests((autz) ->
-                        autz.requestMatchers(HttpMethod.GET, "/usuario/").permitAll()
+                        autz
+                                .requestMatchers(HttpMethod.GET, "/usuario/").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/usuario/registrar").permitAll()
+
+                                .requestMatchers(
+                                        "/swagger-ui.html",
+                                        "/swagger-ui/**",
+                                        "/v3/api-docs/**",
+                                        "/swagger-resources/**",
+                                        "/swagger-resources",
+                                        "/webjars/**",
+                                        "/configuration/ui",
+                                        "/configuration/security"
+                                ).permitAll()
+
                                 .anyRequest().authenticated())
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
                 .addFilter(new JwtValidationFilter(authenticationManager()))
