@@ -57,7 +57,6 @@ public class ArticuloServiceImpl implements ArticuloService {
         articuloExistente.setStock(articuloRequest.getStock());
         articuloExistente.setPrecioVenta(articuloRequest.getPrecioVenta());
         articuloExistente.setCategoria(category);
-
         return articuloMapper.toResponse(articuloRepository.save(articuloExistente));
     }
 
@@ -65,12 +64,15 @@ public class ArticuloServiceImpl implements ArticuloService {
     @Override
     @Transactional
     public void delete(Long id) {
-
-
         if (!articuloRepository.existsById(id)) {
             throw new ArticuloNotFoundException("No se puede eliminar, el artículo con ID " + id + " no existe.");
         }
         articuloRepository.deleteById(id);
 
+    }
+
+    @Override
+    public boolean existsByNombre(String nombre) {
+        return articuloRepository.existsByNombre(nombre);
     }
 }

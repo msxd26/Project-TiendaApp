@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pe.jsaire.tiendaapp.utils.validations.isExistByNombre;
+import pe.jsaire.tiendaapp.utils.validations.isExistByNombreArticulo;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -27,7 +27,7 @@ public class ArticuloRequest implements Serializable {
     private String codigo;
 
     @NotBlank(message = "El campo  no puede estar en blanco")
-    @isExistByNombre
+    @isExistByNombreArticulo
     private String nombre;
 
     @DecimalMin(value = "0.1", message = "El campo no puede estar en blanco")

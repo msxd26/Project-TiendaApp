@@ -8,6 +8,7 @@ import lombok.Setter;
 import pe.jsaire.tiendaapp.utils.validations.isExistsByEmail;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -38,4 +39,6 @@ public class UsuarioRequest implements Serializable {
     private String password;
 
     private boolean admin;
+
+    private Set<RolRequest> roles;
 }

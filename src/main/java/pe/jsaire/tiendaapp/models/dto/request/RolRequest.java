@@ -13,10 +13,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RolRequest implements Serializable {
-
+    
     @NotBlank(message = "El campo  no puede estar en blanco")
     private String nombre;
 
-    @NotBlank(message = "El campo  no puede estar en blanco")
-    private String descripcion;
 }

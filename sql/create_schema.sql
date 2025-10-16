@@ -43,7 +43,7 @@ CREATE TABLE usuario(
                         direccion       VARCHAR(70) NULL,
                         telefono        VARCHAR(20) NULL,
                         email           VARCHAR(50) NOT NULL UNIQUE,
-                        password        BYTEA NOT NULL,
+                        password        VARCHAR(250) NOT NULL,
                         estado          BOOLEAN DEFAULT TRUE
 );
 

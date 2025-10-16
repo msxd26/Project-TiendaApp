@@ -46,7 +46,6 @@ public class IngresoServiceImpl implements IngresoService {
                 .orElseThrow(() -> new IngresoNotFoundException("No existe un ingreso con este id: " + id)));
     }
 
-
     @Override
     @Transactional
     public IngresoResponse save(IngresoRequest ingresoRequest) {
@@ -90,13 +89,16 @@ public class IngresoServiceImpl implements IngresoService {
     }
 
     @Override
+    @Transactional
     public IngresoResponse update(IngresoRequest ingresoRequest, Long id) {
-        Ingreso ingreo = ingresoRepository.findById(id)
+        Ingreso ingreso = ingresoRepository.findById(id)
                 .orElseThrow(() -> new IngresoNotFoundException("No existe un ingreso con id " + id));
+        ingreso.setTipoComprobante(TipoComprobante.valueOf(ingresoRequest.getTipoComprobante()));
+        ingreso.setNumeroComprobante(ingresoRequest.getNumComprobante());
+        ingreso.setEstado(EstadoTransaccion.valueOf(ingresoRequest.getEstado()));
 
-        return null;
+        return ingresoMapper.toResponse(ingresoRepository.save(ingreso));
     }
-
 
     @Override
     @Transactional
@@ -162,6 +164,11 @@ public class IngresoServiceImpl implements IngresoService {
         ingreso.removeDetalleIngreso(detalleIngreso);
 
         return ingresoMapper.toResponse(ingresoRepository.save(ingreso));
+    }
+
+    @Override
+    public boolean existsIngresoBySerieComprobante(String serieComprobante) {
+        return ingresoRepository.existsIngresoBySerieComprobante(serieComprobante);
     }
 }
 

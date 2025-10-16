@@ -4,13 +4,13 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import pe.jsaire.tiendaapp.models.repositories.ArticuloRepository;
+import pe.jsaire.tiendaapp.infraestructures.abstract_services.ArticuloService;
 
 @Component
 @RequiredArgsConstructor
-public class ExistByNombreValidation implements ConstraintValidator<isExistByNombre, String> {
+public class ExistByArticuloValidation implements ConstraintValidator<isExistByNombreArticulo, String> {
 
-    private final ArticuloRepository articuloRepository;
+    private final ArticuloService articuloService;
 
 
     @Override
@@ -18,6 +18,6 @@ public class ExistByNombreValidation implements ConstraintValidator<isExistByNom
         if (nombre == null || nombre.isBlank()) {
             return false;
         }
-        return !articuloRepository.existsByNombre(nombre);
+        return !articuloService.existsByNombre(nombre);
     }
 }
