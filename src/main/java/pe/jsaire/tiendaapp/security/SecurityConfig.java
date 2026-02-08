@@ -49,9 +49,9 @@ public class SecurityConfig {
     SecurityFilterChain filter(HttpSecurity http, CorsConfigurationSource corsConfigurationSource) throws Exception {
         return http.authorizeHttpRequests((autz) ->
                         autz
+                                .requestMatchers(HttpMethod.POST, "/login").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/usuario/").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/usuario/registrar").permitAll()
-
                                 .requestMatchers(
                                         "/swagger-ui.html",
                                         "/swagger-ui/**",
@@ -77,8 +77,8 @@ public class SecurityConfig {
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        configuration.setAllowedOrigins(List.of("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedOriginPatterns(List.of("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
 

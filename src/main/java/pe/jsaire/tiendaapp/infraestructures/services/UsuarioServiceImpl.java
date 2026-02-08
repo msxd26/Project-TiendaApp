@@ -1,7 +1,7 @@
 package pe.jsaire.tiendaapp.infraestructures.services;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import pe.jsaire.tiendaapp.utils.exceptions.UsuarioNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +44,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public void addRol(Long id, RolRequest rolRequest) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+                .orElseThrow(() -> new UsuarioNotFoundException("Usuario no encontrado con id " + id));
 
         Rol rol = rolRepository.findRolByNombre(RolNombre.valueOf(rolRequest.getNombre()))
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado: " + rolRequest.getNombre()));
@@ -56,8 +56,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public void removeRol(Long id, String rolNombre) {
-        var usuario = usuarioRepository.findById(id).
-                orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+        var usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new UsuarioNotFoundException("Usuario no encontrado con id " + id));
 
         RolNombre nombreRol;
         try {
@@ -67,7 +67,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
 
         Rol rol = usuario.getRols().stream()
-                .filter(r -> r.getNombre().equals(rolNombre))
+                .filter(r -> r.getNombre().name().equals(rolNombre))
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("El usuario no tiene el rol: " + rolNombre));
 
@@ -78,7 +78,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     @Transactional(readOnly = true)
     public UsuarioResponse findById(Long id) {
-        return null;
+        return usuarioRepository.findById(id)
+                .map(usuarioMapper::toResponse)
+                .orElseThrow(() -> new UsuarioNotFoundException("No existe ningún usuario con id " + id));
     }
 
     @Override
@@ -113,7 +115,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void delete(Long id) {
 
         if (!usuarioRepository.existsById(id)) {
-            throw new UsernameNotFoundException("No Existe el usuario con el id: " + id);
+            throw new UsuarioNotFoundException("No existe el usuario con id " + id);
         }
         usuarioRepository.deleteById(id);
     }

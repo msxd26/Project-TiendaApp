@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import pe.jsaire.tiendaapp.infraestructures.abstract_services.UsuarioService;
 import pe.jsaire.tiendaapp.models.dto.request.RolRequest;
@@ -45,8 +44,9 @@ public class UsuarioController {
 
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> delete(@PathVariable Long id) {
-        return ResponseEntity.notFound().build();
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        usuarioService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/{id}/roles")
@@ -58,8 +58,8 @@ public class UsuarioController {
 
 
     @DeleteMapping("/{id}/roles/{rolNombre}")
-    @PreAuthorize("hasAnyRole('ADMIN')")
-    public ResponseEntity<Void> removeRol(@PathVariable Long id, @RequestParam String rolNombre) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Void> removeRol(@PathVariable Long id, @PathVariable String rolNombre) {
         usuarioService.removeRol(id, rolNombre);
         return ResponseEntity.noContent().build();
     }
