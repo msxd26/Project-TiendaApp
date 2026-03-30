@@ -22,5 +22,7 @@ public interface UsuarioService {
 
     void removeRol(Long id, String rolNombre);
 
+    UsuarioResponse findByEmail(String email);
+
 
 }

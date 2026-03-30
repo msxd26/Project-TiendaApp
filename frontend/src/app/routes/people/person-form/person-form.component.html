@@ -1,0 +1,95 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Editar' : 'Nueva' }} Persona</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="form-grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo de Persona</mat-label>
+      <mat-select formControlName="tipoPersona">
+        <mat-option value="Cliente">Cliente</mat-option>
+        <mat-option value="Proveedor">Proveedor</mat-option>
+      </mat-select>
+      @if (form.get('tipoPersona')?.hasError('required') && form.get('tipoPersona')?.touched) {
+        <mat-error>El tipo es requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombre">
+      @if (form.get('nombre')?.hasError('required') && form.get('nombre')?.touched) {
+        <mat-error>El nombre es requerido</mat-error>
+      }
+      @if (form.get('nombre')?.hasError('minlength') && form.get('nombre')?.touched) {
+        <mat-error>Mínimo 2 caracteres</mat-error>
+      }
+      @if (form.get('nombre')?.hasError('maxlength') && form.get('nombre')?.touched) {
+        <mat-error>Máximo 150 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo Documento</mat-label>
+      <mat-select formControlName="tipoDocumento">
+        <mat-option value="DNI">DNI</mat-option>
+        <mat-option value="RUC">RUC</mat-option>
+        <mat-option value="CE">CE</mat-option>
+      </mat-select>
+      @if (form.get('tipoDocumento')?.hasError('required') && form.get('tipoDocumento')?.touched) {
+        <mat-error>El tipo de documento es requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nro. Documento</mat-label>
+      <input matInput formControlName="numDocumento">
+      @if (form.get('numDocumento')?.hasError('required') && form.get('numDocumento')?.touched) {
+        <mat-error>El número de documento es requerido</mat-error>
+      }
+      @if (form.get('numDocumento')?.hasError('minlength') && form.get('numDocumento')?.touched) {
+        <mat-error>Mínimo 8 caracteres</mat-error>
+      }
+      @if (form.get('numDocumento')?.hasError('maxlength') && form.get('numDocumento')?.touched) {
+        <mat-error>Máximo 20 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="direccion">
+      @if (form.get('direccion')?.hasError('required') && form.get('direccion')?.touched) {
+        <mat-error>La dirección es requerida</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Teléfono</mat-label>
+      <input matInput formControlName="telefono">
+      @if (form.get('telefono')?.hasError('required') && form.get('telefono')?.touched) {
+        <mat-error>El teléfono es requerido</mat-error>
+      }
+      @if (form.get('telefono')?.hasError('minlength') && form.get('telefono')?.touched) {
+        <mat-error>Mínimo 7 caracteres</mat-error>
+      }
+      @if (form.get('telefono')?.hasError('maxlength') && form.get('telefono')?.touched) {
+        <mat-error>Máximo 15 caracteres</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="email" type="email">
+      <mat-icon matPrefix>email</mat-icon>
+      @if (form.get('email')?.hasError('required') && form.get('email')?.touched) {
+        <mat-error>El email es requerido</mat-error>
+      }
+      @if (form.get('email')?.hasError('email') && !form.get('email')?.hasError('required') && form.get('email')?.touched) {
+        <mat-error>Ingrese un email válido</mat-error>
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="form.invalid">
+    {{ isEdit ? 'Actualizar' : 'Crear' }}
+  </button>
+</mat-dialog-actions>

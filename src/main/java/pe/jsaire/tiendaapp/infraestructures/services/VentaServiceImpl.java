@@ -1,6 +1,9 @@
 package pe.jsaire.tiendaapp.infraestructures.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pe.jsaire.tiendaapp.infraestructures.abstract_services.VentaService;
@@ -18,6 +21,7 @@ import pe.jsaire.tiendaapp.models.repositories.PersonaRepository;
 import pe.jsaire.tiendaapp.models.repositories.UsuarioRepository;
 import pe.jsaire.tiendaapp.models.repositories.VentaRepository;
 import pe.jsaire.tiendaapp.utils.enums.EstadoTransaccion;
+import pe.jsaire.tiendaapp.utils.enums.SortType;
 import pe.jsaire.tiendaapp.utils.enums.TipoComprobante;
 import pe.jsaire.tiendaapp.utils.exceptions.ArticuloNotFoundException;
 import pe.jsaire.tiendaapp.utils.exceptions.PersonaNotFoundException;
@@ -38,6 +42,16 @@ public class VentaServiceImpl implements VentaService {
     private final UsuarioRepository usuarioRepository;
     private final ArticuloRepository articuloRepository;
 
+    @Override
+    @Transactional(readOnly = true)
+    public Page<VentaResponse> getAll(Integer page, Integer size, SortType sortType) {
+        PageRequest pageRequest = switch (sortType) {
+            case LOWER -> PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).ascending());
+            case UPPER -> PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).descending());
+            default -> PageRequest.of(page, size);
+        };
+        return ventaRepository.findAll(pageRequest).map(ventaMapper::toResponse);
+    }
 
     @Override
     @Transactional(readOnly = true)

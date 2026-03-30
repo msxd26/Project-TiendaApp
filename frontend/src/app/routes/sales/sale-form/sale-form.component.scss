@@ -1,0 +1,11 @@
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+.full-width { grid-column: 1 / -1; }
+mat-dialog-content { min-width: 600px; padding-bottom: 0; }
+.detalles-section { margin-top: 8px; }
+.detalles-section h4 { margin-bottom: 8px; }
+.detalles-container { max-height: 35vh; overflow-y: auto; overflow-x: hidden; padding-right: 8px; }
+.detalles-container::-webkit-scrollbar { width: 6px; }
+.detalles-container::-webkit-scrollbar-thumb { background: #ccc; border-radius: 4px; }
+.detalle-row { display: flex; gap: 8px; align-items: center; }
+.flex-2 { flex: 2; }
+.flex-1 { flex: 1; }

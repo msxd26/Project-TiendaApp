@@ -1,0 +1,79 @@
+<h2 mat-dialog-title>Nueva Venta</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="form-grid">
+    <mat-form-field appearance="outline">
+      <mat-label>Cliente</mat-label>
+      <mat-select formControlName="idcliente">
+        @for (p of clients; track p.idpersona) {
+          <mat-option [value]="p.idpersona">{{ p.nombre }}</mat-option>
+        }
+      </mat-select>
+      @if (form.get('idcliente')?.hasError('required') && form.get('idcliente')?.touched) {
+        <mat-error>El cliente es requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Tipo Comprobante</mat-label>
+      <mat-select formControlName="tipoComprobante">
+        <mat-option value="Factura">Factura</mat-option>
+        <mat-option value="Boleta">Boleta</mat-option>
+        <mat-option value="Ticket">Ticket</mat-option>
+        <mat-option value="GuiadeRemision">Guía de Remisión</mat-option>
+      </mat-select>
+      @if (form.get('tipoComprobante')?.hasError('required') && form.get('tipoComprobante')?.touched) {
+        <mat-error>Requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Serie</mat-label>
+      <input matInput formControlName="serieComprobante" placeholder="001">
+      @if (form.get('serieComprobante')?.hasError('required') && form.get('serieComprobante')?.touched) {
+        <mat-error>La serie es requerida</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Nro. Comprobante</mat-label>
+      <input matInput formControlName="numComprobante">
+      @if (form.get('numComprobante')?.hasError('required') && form.get('numComprobante')?.touched) {
+        <mat-error>El número es requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="full-width detalles-section">
+      <h4>Detalles de Venta</h4>
+      <div class="detalles-container" formArrayName="detalles">
+        @for (det of detalles.controls; track det; let i = $index) {
+          <div class="detalle-row" [formGroup]="$any(det)">
+            <mat-form-field appearance="outline" class="flex-2">
+              <mat-label>Artículo</mat-label>
+              <mat-select formControlName="idarticulo">
+                @for (a of articles; track a.idarticulo) {
+                  <mat-option [value]="a.idarticulo">{{ a.nombre }} (Stock: {{ a.stock }})</mat-option>
+                }
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="flex-1">
+              <mat-label>Cantidad</mat-label>
+              <input matInput formControlName="cantidad" type="number" min="1">
+            </mat-form-field>
+            <button mat-icon-button color="warn" type="button" (click)="removeDetalle(i)">
+              <mat-icon>remove_circle</mat-icon>
+            </button>
+          </div>
+        }
+      </div>
+      <button mat-stroked-button color="primary" type="button" (click)="addDetalle()" style="margin-top: 12px;">
+        <mat-icon>add</mat-icon> Agregar Detalle
+      </button>
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()">
+    Registrar Venta
+  </button>
+</mat-dialog-actions>

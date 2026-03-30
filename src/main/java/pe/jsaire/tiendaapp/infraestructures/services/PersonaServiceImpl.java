@@ -1,6 +1,9 @@
 package pe.jsaire.tiendaapp.infraestructures.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pe.jsaire.tiendaapp.infraestructures.abstract_services.PersonaService;
@@ -9,6 +12,7 @@ import pe.jsaire.tiendaapp.models.dto.request.PersonaRequest;
 import pe.jsaire.tiendaapp.models.dto.response.PersonaResponse;
 import pe.jsaire.tiendaapp.models.entities.Persona;
 import pe.jsaire.tiendaapp.models.repositories.PersonaRepository;
+import pe.jsaire.tiendaapp.utils.enums.SortType;
 import pe.jsaire.tiendaapp.utils.exceptions.PersonaNotFoundException;
 
 @Service
@@ -17,6 +21,17 @@ public class PersonaServiceImpl implements PersonaService {
 
     private final PersonaRepository personaRepository;
     private final PersonaMapper personaMapper;
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<PersonaResponse> getAll(Integer page, Integer size, SortType sortType) {
+        PageRequest pageRequest = switch (sortType) {
+            case LOWER -> PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).ascending());
+            case UPPER -> PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).descending());
+            default -> PageRequest.of(page, size);
+        };
+        return personaRepository.findAll(pageRequest).map(personaMapper::toResponse);
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -43,7 +58,7 @@ public class PersonaServiceImpl implements PersonaService {
         persona.setDireccion(personaRequest.getDireccion());
         persona.setEmail(personaRequest.getEmail());
         persona.setTelefono(personaRequest.getTelefono());
-        return personaMapper.toResponse(personaRepository.save(personaMapper.toEntity(personaRequest)));
+        return personaMapper.toResponse(personaRepository.save(persona));
     }
 
     @Override

@@ -1,0 +1,99 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Editar' : 'Nuevo' }} Usuario</h2>
+<mat-dialog-content>
+  <form [formGroup]="form" class="form-grid">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre Completo</mat-label>
+      <input matInput formControlName="nombre">
+      @if (form.get('nombre')?.errors?.['required'] && form.get('nombre')?.touched) {
+        <mat-error>El nombre es requerido</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Tipo Documento</mat-label>
+        <mat-select formControlName="tipoDocumento">
+          <mat-option value="DNI">DNI</mat-option>
+          <mat-option value="RUC">RUC</mat-option>
+          <mat-option value="PASAPORTE">PASAPORTE</mat-option>
+          <mat-option value="CE">C.E.</mat-option>
+        </mat-select>
+        @if (form.get('tipoDocumento')?.errors?.['required'] && form.get('tipoDocumento')?.touched) {
+          <mat-error>Requerido</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Número Documento</mat-label>
+        <input matInput formControlName="numDocumento">
+        @if (form.get('numDocumento')?.errors?.['required'] && form.get('numDocumento')?.touched) {
+          <mat-error>Requerido (Mín 8)</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="direccion">
+      @if (form.get('direccion')?.errors?.['required'] && form.get('direccion')?.touched) {
+        <mat-error>La dirección es requerida</mat-error>
+      }
+    </mat-form-field>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput formControlName="telefono">
+        @if (form.get('telefono')?.errors?.['required'] && form.get('telefono')?.touched) {
+          <mat-error>Requerido</mat-error>
+        }
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email" type="email">
+        @if (form.get('email')?.errors?.['required'] && form.get('email')?.touched) {
+          <mat-error>El email es requerido</mat-error>
+        }
+        @if (form.get('email')?.errors?.['email'] && form.get('email')?.touched) {
+          <mat-error>Email no válido</mat-error>
+        }
+      </mat-form-field>
+    </div>
+
+    @if (!isEdit) {
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Contraseña</mat-label>
+        <input matInput formControlName="password" type="password">
+        @if (form.get('password')?.errors?.['required'] && form.get('password')?.touched) {
+          <mat-error>La contraseña es requerida</mat-error>
+        }
+        @if (form.get('password')?.errors?.['minlength'] && form.get('password')?.touched) {
+          <mat-error>Mínimo 4 caracteres</mat-error>
+        }
+      </mat-form-field>
+    }
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Roles</mat-label>
+      <mat-select formControlName="roles" multiple>
+        @for (rol of roles; track rol.idrol) {
+          <mat-option [value]="rol.nombre">{{ rol.nombre.replace('ROLE_','') }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    @if (!isEdit) {
+      <div class="checkbox-container">
+        <mat-checkbox formControlName="admin">¿Es Administrador principal?</mat-checkbox>
+      </div>
+    }
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancelar</button>
+  <button mat-raised-button color="primary" (click)="onSave()" [disabled]="form.invalid">
+    {{ isEdit ? 'Actualizar' : 'Crear' }}
+  </button>
+</mat-dialog-actions>

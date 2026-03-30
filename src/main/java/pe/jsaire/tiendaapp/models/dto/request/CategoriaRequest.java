@@ -15,11 +15,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class CategoriaRequest implements Serializable {
 
-    @NotBlank(message = "Este campo no puede estar en blanco")
+    @NotBlank(message = "El nombre de la categoría no puede estar en blanco")
     @isExistsByCategoria
     private String nombre;
 
-    @NotBlank(message = "Este campo no puede estar en blanco")
+    @NotBlank(message = "La descripción no puede estar en blanco")
     private String descripcion;
-
 }

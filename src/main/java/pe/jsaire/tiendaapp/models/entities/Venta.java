@@ -59,7 +59,9 @@ public class Venta {
 
     @Column(name = "fecha_hora")
     private LocalDate fechaHora;
+    @Column(precision = 11, scale = 2)
     private BigDecimal impuesto;
+    @Column(precision = 11, scale = 2)
     private BigDecimal total;
 
     @Enumerated(EnumType.STRING)

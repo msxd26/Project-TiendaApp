@@ -1,10 +1,14 @@
 package pe.jsaire.tiendaapp.infraestructures.services;
 
-import lombok.RequiredArgsConstructor;
-import pe.jsaire.tiendaapp.utils.exceptions.UsuarioNotFoundException;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import lombok.RequiredArgsConstructor;
 import pe.jsaire.tiendaapp.infraestructures.abstract_services.UsuarioService;
 import pe.jsaire.tiendaapp.mappers.UsuarioMapper;
 import pe.jsaire.tiendaapp.models.dto.request.RolRequest;
@@ -15,10 +19,7 @@ import pe.jsaire.tiendaapp.models.entities.Usuario;
 import pe.jsaire.tiendaapp.models.repositories.RolRepository;
 import pe.jsaire.tiendaapp.models.repositories.UsuarioRepository;
 import pe.jsaire.tiendaapp.utils.enums.RolNombre;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import pe.jsaire.tiendaapp.utils.exceptions.UsuarioNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -59,9 +60,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         var usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new UsuarioNotFoundException("Usuario no encontrado con id " + id));
 
-        RolNombre nombreRol;
         try {
-            nombreRol = RolNombre.valueOf(rolNombre);
+            RolNombre.valueOf(rolNombre);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("Rol inválido: " + rolNombre);
         }
@@ -94,8 +94,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         if (usuarioRequest.isAdmin()) {
             Rol rolAdmin = rolRepository.findRolByNombre(RolNombre.ROLE_ADMIN)
-                    .orElseThrow(() -> new RuntimeException("Rol INVITADO no encontrado"));
+                    .orElseThrow(() -> new RuntimeException("Rol ADMIN no encontrado"));
             roles.add(rolAdmin);
+        }
+
+        if (usuarioRequest.getRoles() != null && !usuarioRequest.getRoles().isEmpty()) {
+            for (RolRequest rolReq : usuarioRequest.getRoles()) {
+                Rol rolEntity = rolRepository.findRolByNombre(RolNombre.valueOf(rolReq.getNombre()))
+                        .orElseThrow(() -> new RuntimeException("Rol no encontrado: " + rolReq.getNombre()));
+                roles.add(rolEntity);
+            }
         }
         usuario.setNombre(usuarioRequest.getNombre());
         usuario.setTipoDocumento(usuarioRequest.getTipoDocumento());
@@ -105,7 +113,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setEmail(usuarioRequest.getEmail());
         usuario.setPassword(passwordEncoder.encode(usuarioRequest.getPassword()));
         usuario.setRols(roles);
-        System.out.println(usuarioRequest.isAdmin());
+
         return usuarioMapper.toResponse(usuarioRepository.save(usuario));
     }
 
@@ -118,5 +126,13 @@ public class UsuarioServiceImpl implements UsuarioService {
             throw new UsuarioNotFoundException("No existe el usuario con id " + id);
         }
         usuarioRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UsuarioResponse findByEmail(String email) {
+        return usuarioRepository.findByEmail(email)
+                .map(usuarioMapper::toResponse)
+                .orElseThrow(() -> new UsuarioNotFoundException("No existe ningún usuario con email " + email));
     }
 }

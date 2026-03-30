@@ -1,0 +1,15 @@
+<div class="dashboard">
+  <h1>Bienvenido, {{ authService.userEmail() }}</h1>
+  <p class="subtitle">Panel de control — TiendaApp</p>
+
+  <div class="cards-grid">
+    @for (link of visibleLinks; track link.route) {
+      <mat-card class="quick-card" [routerLink]="link.route">
+        <mat-card-content>
+          <mat-icon [style.color]="link.color" class="card-icon">{{ link.icon }}</mat-icon>
+          <h3>{{ link.label }}</h3>
+        </mat-card-content>
+      </mat-card>
+    }
+  </div>
+</div>

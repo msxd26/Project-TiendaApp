@@ -75,7 +75,6 @@ public class Usuario implements Serializable {
     public void removeRol(Rol rol) {
         if (this.rols != null) {
             this.rols.remove(rol);
-            this.setRols(null);
         }
     }
 }

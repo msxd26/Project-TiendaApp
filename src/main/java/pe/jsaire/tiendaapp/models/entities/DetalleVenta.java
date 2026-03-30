@@ -35,7 +35,10 @@ public class DetalleVenta {
 
     private Integer cantidad;
 
+    @Column(precision = 11, scale = 2)
     private BigDecimal precio;
+    
+    @Column(precision = 11, scale = 2)
     private BigDecimal descuento;
 
     public DetalleVenta() {

@@ -2,9 +2,9 @@ package pe.jsaire.tiendaapp.models.dto.request;
 
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,23 +20,26 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class ArticuloRequest implements Serializable {
 
-    @Size(min = 1)
+    @NotNull(message = "La categoría es requerida")
+    @Positive(message = "El id de categoría debe ser positivo")
     private Long idcategoria;
 
-    @NotBlank(message = "El campo  no puede estar en blanco")
+    @NotBlank(message = "El código no puede estar en blanco")
     private String codigo;
 
-    @NotBlank(message = "El campo  no puede estar en blanco")
+    @NotBlank(message = "El nombre no puede estar en blanco")
     @isExistByNombreArticulo
     private String nombre;
 
-    @DecimalMin(value = "0.1", message = "El campo no puede estar en blanco")
-    @Positive
+    @NotNull(message = "El precio de venta es requerido")
+    @DecimalMin(value = "0.1", message = "El precio de venta debe ser al menos 0.1")
+    @Positive(message = "El precio de venta debe ser positivo")
     private BigDecimal precioVenta;
 
-    @PositiveOrZero(message = "El campo no puede ser negativo")
+    @NotNull(message = "El stock es requerido")
+    @PositiveOrZero(message = "El stock no puede ser negativo")
     private Integer stock;
 
-    @NotBlank(message = "El campo  no puede estar en blanco")
+    @NotBlank(message = "La descripción no puede estar en blanco")
     private String descripcion;
 }

@@ -1,6 +1,9 @@
 package pe.jsaire.tiendaapp.infraestructures.services;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pe.jsaire.tiendaapp.infraestructures.abstract_services.ArticuloService;
@@ -11,8 +14,12 @@ import pe.jsaire.tiendaapp.models.entities.Articulo;
 import pe.jsaire.tiendaapp.models.entities.Categoria;
 import pe.jsaire.tiendaapp.models.repositories.ArticuloRepository;
 import pe.jsaire.tiendaapp.models.repositories.CategoriaRepository;
+import pe.jsaire.tiendaapp.utils.enums.SortType;
 import pe.jsaire.tiendaapp.utils.exceptions.ArticuloNotFoundException;
 import pe.jsaire.tiendaapp.utils.exceptions.CategoriaNotFoundException;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +28,26 @@ public class ArticuloServiceImpl implements ArticuloService {
     private final ArticuloRepository articuloRepository;
     private final ArticuloMapper articuloMapper;
     private final CategoriaRepository categoriaRepository;
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<ArticuloResponse> getAll(Integer page, Integer size, SortType sortType) {
+        PageRequest pageRequest = switch (sortType) {
+            case LOWER -> PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).ascending());
+            case UPPER -> PageRequest.of(page, size, Sort.by(FIELD_BY_SORT).descending());
+            default -> PageRequest.of(page, size);
+        };
+        return articuloRepository.findAll(pageRequest).map(articuloMapper::toResponse);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ArticuloResponse> buscarPorNombre(String nombre) {
+        return articuloRepository.findByNombreContainingIgnoreCase(nombre)
+                .stream()
+                .map(articuloMapper::toResponse)
+                .collect(Collectors.toList());
+    }
 
     @Transactional(readOnly = true)
     @Override

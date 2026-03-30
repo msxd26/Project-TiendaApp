@@ -1,0 +1,41 @@
+<div class="profile-page">
+  <h2>Mi Perfil</h2>
+  @if (loading()) {
+    <mat-spinner></mat-spinner>
+  } @else if (user()) {
+    <mat-card>
+      <mat-card-header>
+        <mat-icon mat-card-avatar class="avatar-icon">account_circle</mat-icon>
+        <mat-card-title>{{ user()!.nombre }}</mat-card-title>
+        <mat-card-subtitle>{{ user()!.email }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item>
+            <mat-icon matListItemIcon>badge</mat-icon>
+            <span matListItemTitle>Documento</span>
+            <span matListItemLine>{{ user()!.tipoDocumento }} - {{ user()!.numDocumento }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>location_on</mat-icon>
+            <span matListItemTitle>Dirección</span>
+            <span matListItemLine>{{ user()!.direccion }}</span>
+          </mat-list-item>
+          <mat-list-item>
+            <mat-icon matListItemIcon>phone</mat-icon>
+            <span matListItemTitle>Teléfono</span>
+            <span matListItemLine>{{ user()!.telefono }}</span>
+          </mat-list-item>
+        </mat-list>
+        <div class="roles-section">
+          <h4>Roles</h4>
+          <mat-chip-set>
+            @for (rol of user()!.role; track rol.idrol) {
+              <mat-chip color="primary" highlighted>{{ rol.nombre }}</mat-chip>
+            }
+          </mat-chip-set>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  }
+</div>

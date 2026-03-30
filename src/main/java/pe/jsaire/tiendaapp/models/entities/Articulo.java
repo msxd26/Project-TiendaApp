@@ -33,6 +33,7 @@ public class Articulo {
  
     private String codigo;
     private String nombre;
+    @Column(precision = 11, scale = 2)
     private BigDecimal precioVenta;
     private int stock;
     private String descripcion;

@@ -94,7 +94,7 @@ public class Ingreso {
     }
 
     public void addDetalleIngreso(DetalleIngreso detalleIngreso) {
-        if (detalleIngreso == null) {
+        if (this.detalleIngresos == null) {
             this.detalleIngresos = new HashSet<>();
         }
         this.detalleIngresos.add(detalleIngreso);
